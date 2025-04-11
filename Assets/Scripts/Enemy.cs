@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -10,6 +8,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
 
     private int _currentPatrolPointIndex = 0;
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.TryGetComponent<PatrolPoint>(out _))
+        {
+            ChangePatrolDirection();
+        }
+    }
 
     protected void PatrolMove()
     {
@@ -33,14 +39,6 @@ public class Enemy : MonoBehaviour
         else if (direction.x > 0)
         {
             _spriteRenderer.flipX = true;
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.TryGetComponent<PatrolPoint>(out _))
-        {
-            ChangePatrolDirection();
         }
     }
 }

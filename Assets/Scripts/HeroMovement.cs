@@ -39,6 +39,24 @@ public class HeroMovement : MonoBehaviour
         Move();
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.TryGetComponent<Ground>(out _))
+        {
+            _isGrounded = true;
+            _animator.SetBool(PlayerAnimatorData.Params.IsGrounded, _isGrounded);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.TryGetComponent<Ground>(out _))
+        {
+            _isGrounded = false;
+            _animator.SetBool(PlayerAnimatorData.Params.IsGrounded, _isGrounded);
+        }
+    }
+
     private void Move()
     {
         _rigidbody.velocity = new Vector2(_inputService.GetDirection.x * _movementSpeed, _rigidbody.velocity.y);
@@ -59,24 +77,6 @@ public class HeroMovement : MonoBehaviour
         {
             _rigidbody.AddForce(new Vector2(0, _jumpForce), ForceMode2D.Impulse);
             _animator.SetTrigger(PlayerAnimatorData.Params.Jump);
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.TryGetComponent<Ground>(out _))
-        {
-            _isGrounded = true;
-            _animator.SetBool(PlayerAnimatorData.Params.IsGrounded, _isGrounded);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.TryGetComponent<Ground>(out _))
-        {
-            _isGrounded = false;
-            _animator.SetBool(PlayerAnimatorData.Params.IsGrounded, _isGrounded);
         }
     }
 }

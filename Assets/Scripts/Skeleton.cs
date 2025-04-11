@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Skeleton : Enemy
 {
     [SerializeField] private float _riseTime;
+
     private void Start()
     {
         _isPatrol = false;
