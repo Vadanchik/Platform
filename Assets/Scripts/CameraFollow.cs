@@ -9,15 +9,12 @@ public class CameraFollow : MonoBehaviour
 
     private void Update()
     {
-        if (_target != null)
-        {
-            Vector3 desiredPosition = _target.position + _offset;
+        Vector3 desiredPosition = _target.position + _offset;
 
-            if (Mathf.Abs(transform.position.x - desiredPosition.x) > _followTreshhold)
-            {
-                Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, _smoothSpeed * Time.deltaTime);
-                transform.position = new Vector3(smoothedPosition.x, transform.position.y, transform.position.z);
-            }
+        if (Mathf.Abs(transform.position.x - desiredPosition.x) > _followTreshhold)
+        {
+            Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, _smoothSpeed * Time.deltaTime);
+            transform.position = new Vector3(smoothedPosition.x, transform.position.y, transform.position.z);
         }
     }
 }

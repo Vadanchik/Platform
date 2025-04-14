@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(InputService))]
@@ -10,17 +11,20 @@ public class HeroMovement : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private float _movementSpeed;
     [SerializeField] private float _jumpForce;
+    [SerializeField] private bool _isGrounded = false;
 
-    [SerializeField] private bool _isGrounded = true;
+    public event Action<float> Running;
+    public event Action Jumped;
+    public event Action<bool> Flying;
 
     private void OnEnable()
     {
-        _inputService.OnJumpKeyDown += Jump;
+        _inputService.JumpKeyPressed += Jump;
     }
 
     private void OnDisable()
     {
-        _inputService.OnJumpKeyDown -= Jump;
+        _inputService.JumpKeyPressed -= Jump;
     }
 
     private void Awake()
@@ -29,9 +33,9 @@ public class HeroMovement : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    private void Update()
     {
-        _animator.SetFloat(PlayerAnimatorData.Params.Speed, Mathf.Clamp01(Mathf.Abs(_rigidbody.velocity.x)));
+        Running?.Invoke(_rigidbody.velocity.x);
     }
 
     private void FixedUpdate()
@@ -44,7 +48,7 @@ public class HeroMovement : MonoBehaviour
         if (collision.gameObject.TryGetComponent<Ground>(out _))
         {
             _isGrounded = true;
-            _animator.SetBool(PlayerAnimatorData.Params.IsGrounded, _isGrounded);
+            Flying?.Invoke(_isGrounded);
         }
     }
 
@@ -53,7 +57,7 @@ public class HeroMovement : MonoBehaviour
         if (collision.gameObject.TryGetComponent<Ground>(out _))
         {
             _isGrounded = false;
-            _animator.SetBool(PlayerAnimatorData.Params.IsGrounded, _isGrounded);
+            Flying?.Invoke(_isGrounded);
         }
     }
 
@@ -73,10 +77,10 @@ public class HeroMovement : MonoBehaviour
 
     private void Jump()
     {
-        if (_isGrounded == true)
+        if (_isGrounded)
         {
             _rigidbody.AddForce(new Vector2(0, _jumpForce), ForceMode2D.Impulse);
-            _animator.SetTrigger(PlayerAnimatorData.Params.Jump);
+            Jumped?.Invoke();
         }
     }
 }
