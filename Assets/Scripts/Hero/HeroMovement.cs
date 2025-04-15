@@ -8,7 +8,8 @@ public class HeroMovement : MonoBehaviour
     [SerializeField] private InputService _inputService;
     [SerializeField] private Rigidbody2D _rigidbody;
     [SerializeField] private Animator _animator;
-    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private Flipper _flipper;
+
     [SerializeField] private float _movementSpeed;
     [SerializeField] private float _jumpForce;
     [SerializeField] private bool _isGrounded = false;
@@ -31,6 +32,7 @@ public class HeroMovement : MonoBehaviour
     {
         _inputService = GetComponent<InputService>();
         _rigidbody = GetComponent<Rigidbody2D>();
+        _flipper = GetComponent<Flipper>();
     }
 
     private void Update()
@@ -40,7 +42,8 @@ public class HeroMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
+        _rigidbody.velocity = new Vector2(_inputService.GetDirection.x * _movementSpeed, _rigidbody.velocity.y);
+        _flipper.SetLookRotation(_inputService.GetDirection.x);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -58,20 +61,6 @@ public class HeroMovement : MonoBehaviour
         {
             _isGrounded = false;
             Flying?.Invoke(_isGrounded);
-        }
-    }
-
-    private void Move()
-    {
-        _rigidbody.velocity = new Vector2(_inputService.GetDirection.x * _movementSpeed, _rigidbody.velocity.y);
-
-        if (_rigidbody.velocity.x > 0)
-        {
-            _spriteRenderer.flipX = false;
-        }
-        else if (_rigidbody.velocity.x < 0)
-        {
-            _spriteRenderer.flipX = true;
         }
     }
 

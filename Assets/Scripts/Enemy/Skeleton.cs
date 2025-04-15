@@ -10,11 +10,11 @@ public class Skeleton : Enemy
         Invoke(nameof(StartPatrol), _riseTime);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (_isPatrol)
         {
-            PatrolMove();
+            MoveToTarget(_patroller.GetCurrentTarget());
         }
     }
 

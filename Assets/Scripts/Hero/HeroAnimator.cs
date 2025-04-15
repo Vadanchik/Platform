@@ -31,7 +31,6 @@ public class HeroAnimator : MonoBehaviour
 
     private void SetIsGrounded(bool isGrounded)
     {
-        Debug.Log(isGrounded);
         _animator.SetBool(PlayerAnimatorData.Params.IsGrounded, isGrounded);
     }
 }
