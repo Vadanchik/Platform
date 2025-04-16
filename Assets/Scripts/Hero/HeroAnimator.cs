@@ -3,20 +3,21 @@ using UnityEngine;
 public class HeroAnimator : MonoBehaviour
 {
     [SerializeField] private HeroMovement _heroMovement;
+    [SerializeField] private Jumper _jumper;
     [SerializeField] private Animator _animator;
 
     private void OnEnable()
     {
         _heroMovement.Running += SetSpeed;
-        _heroMovement.Flying += SetIsGrounded;
-        _heroMovement.Jumped += TriggerJump;
+        _jumper.Flying += SetIsGrounded;
+        _jumper.Jumped += TriggerJump;
     }
 
     private void OnDisable()
     {
         _heroMovement.Running -= SetSpeed;
-        _heroMovement.Flying -= SetIsGrounded;
-        _heroMovement.Jumped -= TriggerJump;
+        _jumper.Flying -= SetIsGrounded;
+        _jumper.Jumped -= TriggerJump;
     }
 
     private void SetSpeed(float velocity)

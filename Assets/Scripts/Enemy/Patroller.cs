@@ -3,13 +3,13 @@ using UnityEngine;
 public class Patroller : MonoBehaviour
 {
     [SerializeField] private PatrolPoint[] _patrolPoints;
-    [SerializeField] private EnemyCollision _enemyCollision;
+    [SerializeField] private EnemyCollisionHandler _enemyCollision;
 
     private int _currentPatrolPointIndex = 0;
 
     private void Awake()
     {
-        _enemyCollision = GetComponent<EnemyCollision>();
+        _enemyCollision = GetComponent<EnemyCollisionHandler>();
     }
 
     private void OnEnable()

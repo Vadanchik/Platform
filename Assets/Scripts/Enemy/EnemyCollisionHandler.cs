@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class EnemyCollision : MonoBehaviour
+public class EnemyCollisionHandler : MonoBehaviour
 {
     public event Action PatrolPointEntered;
 

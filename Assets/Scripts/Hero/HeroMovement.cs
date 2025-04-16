@@ -9,30 +9,34 @@ public class HeroMovement : MonoBehaviour
     [SerializeField] private Rigidbody2D _rigidbody;
     [SerializeField] private Animator _animator;
     [SerializeField] private Flipper _flipper;
+    //[SerializeField] private HeroCollisionHandler _collisionHandler;
 
     [SerializeField] private float _movementSpeed;
-    [SerializeField] private float _jumpForce;
-    [SerializeField] private bool _isGrounded = false;
+    //[SerializeField] private float _jumpForce;
+    //[SerializeField] private bool _isGrounded = false;
 
     public event Action<float> Running;
-    public event Action Jumped;
-    public event Action<bool> Flying;
+    //public event Action Jumped;
+    //public event Action<bool> Flying;
 
-    private void OnEnable()
+    /*private void OnEnable()
     {
         _inputService.JumpKeyPressed += Jump;
+        _collisionHandler.Grounded += SetIsGrounded;
     }
 
     private void OnDisable()
     {
         _inputService.JumpKeyPressed -= Jump;
-    }
+        _collisionHandler.Grounded -= SetIsGrounded;
+    }*/
 
     private void Awake()
     {
         _inputService = GetComponent<InputService>();
         _rigidbody = GetComponent<Rigidbody2D>();
         _flipper = GetComponent<Flipper>();
+        //_collisionHandler = GetComponent<HeroCollisionHandler>();
     }
 
     private void Update()
@@ -46,7 +50,7 @@ public class HeroMovement : MonoBehaviour
         _flipper.SetLookRotation(_inputService.GetDirection.x);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    /*private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.TryGetComponent<Ground>(out _))
         {
@@ -62,6 +66,12 @@ public class HeroMovement : MonoBehaviour
             _isGrounded = false;
             Flying?.Invoke(_isGrounded);
         }
+    }*/
+
+    /*private void SetIsGrounded(bool isGrounded)
+    {
+        _isGrounded = isGrounded;
+        Flying?.Invoke(_isGrounded);
     }
 
     private void Jump()
@@ -71,5 +81,5 @@ public class HeroMovement : MonoBehaviour
             _rigidbody.AddForce(new Vector2(0, _jumpForce), ForceMode2D.Impulse);
             Jumped?.Invoke();
         }
-    }
+    }*/
 }
