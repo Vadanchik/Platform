@@ -1,17 +1,22 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class HeroCollisionHandler : MonoBehaviour
+public class GroundDetector : MonoBehaviour
 {
+    private int _enterCount = 0;
+
     public event Action<bool> Grounded;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.TryGetComponent<Ground>(out _))
         {
-            Grounded?.Invoke(true);
+            _enterCount++;
+
+            if (_enterCount > 0)
+            {
+                Grounded?.Invoke(true);
+            }
         }
     }
 
@@ -19,7 +24,12 @@ public class HeroCollisionHandler : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent<Ground>(out _))
         {
-            Grounded?.Invoke(false);
+            _enterCount--;
+
+            if (_enterCount <= 0)
+            {
+                Grounded?.Invoke(false);
+            }
         }
     }
 }

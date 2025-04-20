@@ -3,16 +3,17 @@ using UnityEngine;
 
 public class InputService : MonoBehaviour
 {
+    private const string HorizontalAxis = "Horizontal";
+    
+    private KeyCode _jumpKey = KeyCode.Space;
+
     public event Action JumpKeyPressed;
 
-    private KeyCode JumpKey = KeyCode.Space;
-    private const string HorizontalAxis = "Horizontal";
-
-    public Vector3 GetDirection => new Vector3(Input.GetAxis(HorizontalAxis), 0, 0);
+    public Vector3 Direction => new Vector3(Input.GetAxis(HorizontalAxis), 0, 0);
 
     private void Update()
     {
-        if (Input.GetKeyDown(JumpKey))
+        if (Input.GetKeyDown(_jumpKey))
         {
             JumpKeyPressed?.Invoke();
         }

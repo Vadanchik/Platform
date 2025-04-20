@@ -7,7 +7,7 @@ public class CameraFollower : MonoBehaviour
     [SerializeField] private Vector3 _offset;
     [SerializeField] private float _followTreshhold = 0.5f;
 
-    private void Update()
+    private void LateUpdate()
     {
         Vector3 desiredPosition = _target.position + _offset;
 

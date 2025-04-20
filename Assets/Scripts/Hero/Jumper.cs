@@ -1,17 +1,14 @@
-using System;
 using UnityEngine;
 
 public class Jumper : MonoBehaviour
 {
     [SerializeField] private InputService _inputService;
     [SerializeField] private Rigidbody2D _rigidbody;
-    [SerializeField] private HeroCollisionHandler _collisionHandler;
+    [SerializeField] private GroundDetector _collisionHandler;
+    [SerializeField] private HeroAnimator _animator;
 
     [SerializeField] private float _jumpForce;
     [SerializeField] private bool _isGrounded = false;
-
-    public event Action Jumped;
-    public event Action<bool> Flying;
 
     private void OnEnable()
     {
@@ -29,13 +26,14 @@ public class Jumper : MonoBehaviour
     {
         _inputService = GetComponent<InputService>();
         _rigidbody = GetComponent<Rigidbody2D>();
-        _collisionHandler = GetComponent<HeroCollisionHandler>();
+        _collisionHandler = GetComponent<GroundDetector>();
+        _animator = GetComponent<HeroAnimator>();
     }
 
     private void SetIsGrounded(bool isGrounded)
     {
         _isGrounded = isGrounded;
-        Flying?.Invoke(_isGrounded);
+        _animator.SetIsGrounded(_isGrounded);
     }
 
     private void Jump()
@@ -43,7 +41,7 @@ public class Jumper : MonoBehaviour
         if (_isGrounded)
         {
             _rigidbody.AddForce(new Vector2(0, _jumpForce), ForceMode2D.Impulse);
-            Jumped?.Invoke();
+            _animator.TriggerJump();
         }
     }
 }

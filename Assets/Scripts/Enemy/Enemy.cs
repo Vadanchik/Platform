@@ -16,14 +16,6 @@ public class Enemy : MonoBehaviour
         _flipper = GetComponent<Flipper>();
     }
 
-    private void FixedUpdate()
-    {
-        if (_isPatrol)
-        {
-            MoveToTarget(_patroller.GetCurrentTarget());
-        }
-    }
-
     protected void MoveToTarget(Vector3 targetPosition)
     {
         Vector2 direction = targetPosition - transform.position;

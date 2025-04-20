@@ -21,7 +21,7 @@ public class CoinSpawner : MonoBehaviour
         {
             coin = Instantiate(_coinPrefab, transform.position, Quaternion.identity);
             randomVelocityDirection = new Vector2(Random.Range(-_horizontalVelocitySpread, _horizontalVelocitySpread), 1);
-            coin.GiveStartVelocity(randomVelocityDirection * _startCoinSpeed);
+            coin.SetStartVelocity(randomVelocityDirection * _startCoinSpeed);
         }
     }
 }
