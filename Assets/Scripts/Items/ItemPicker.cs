@@ -5,6 +5,7 @@ using UnityEngine;
 public class ItemPicker : MonoBehaviour
 {
     public event Action CoinPicked;
+    public event Action<HealingDrop> HealingDropPicked;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -12,6 +13,11 @@ public class ItemPicker : MonoBehaviour
         {
             CoinPicked?.Invoke();
             Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.TryGetComponent<HealingDrop>(out HealingDrop healingDrop))
+        {
+            HealingDropPicked?.Invoke(healingDrop);
         }
     }
 }

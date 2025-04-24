@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HeroAnimator : MonoBehaviour
 {
-    [SerializeField] private HeroMovement _heroMovement;
+    [SerializeField] private HeroMover _heroMovement;
     [SerializeField] private Jumper _jumper;
     [SerializeField] private Animator _animator;
 
@@ -14,6 +14,11 @@ public class HeroAnimator : MonoBehaviour
     public void TriggerJump()
     {
         _animator.SetTrigger(PlayerAnimatorData.Params.Jump);
+    }
+
+    public void TriggerAttack()
+    {
+        _animator.SetTrigger(PlayerAnimatorData.Params.Attack);
     }
 
     public void SetIsGrounded(bool isGrounded)

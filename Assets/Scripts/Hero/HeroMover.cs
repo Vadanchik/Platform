@@ -2,7 +2,9 @@ using UnityEngine;
 
 [RequireComponent(typeof(InputService))]
 [RequireComponent(typeof(Rigidbody2D))]
-public class HeroMovement : MonoBehaviour
+[RequireComponent(typeof(HeroAnimator))]
+[RequireComponent(typeof(Flipper))]
+public class HeroMover : MonoBehaviour
 {
     [SerializeField] private InputService _inputService;
     [SerializeField] private Rigidbody2D _rigidbody;
