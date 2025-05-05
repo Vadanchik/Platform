@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(InputService))]
@@ -12,6 +13,11 @@ public class HeroAttacker : MonoBehaviour
 
     [SerializeField] private int _attackDamage;
     [SerializeField] private float _pushForce;
+
+    [Header("Attack Area")]
+    [SerializeField] private Vector2 _offset;
+    [SerializeField] private Vector2 _size;
+    [SerializeField] private LayerMask _layerMask;
 
     private List<IDamagable> _currentAttackedDamagables = new List<IDamagable>();
 
@@ -40,7 +46,11 @@ public class HeroAttacker : MonoBehaviour
 
     private void Attack()
     {
-        List<IDamagable> attackedObjects = _attackArea.DamagableObjects;
+        IDamagable damagable = null;
+        List<IDamagable> attackedObjects = Physics2D.OverlapBoxAll((Vector2)transform.position + new Vector2(_offset.x * transform.right.x, _offset.y), _size, 0, _layerMask)
+            .Where(collider => collider.TryGetComponent(out damagable))
+            .Select(collider => damagable)
+            .ToList();
 
         foreach(IDamagable attackedObject in attackedObjects)
         {

@@ -1,24 +1,33 @@
+using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Enemy))]
+[RequireComponent(typeof(EnemyMover))]
 public class Riser : MonoBehaviour
 {
     [SerializeField] private float _riseTime;
-    [SerializeField] private Enemy _enemy;
+    [SerializeField] private EnemyMover _enemy;
 
     private void Awake()
     {
-        _enemy = GetComponent<Enemy>();
+        _enemy = GetComponent<EnemyMover>();
     }
 
     private void Start()
     {
         _enemy.SetCanMove(false);
-        Invoke(nameof(StartPatrol), _riseTime);
+        StartCoroutine(WaitForRise(_riseTime));
     }
 
     private void StartPatrol()
     {
         _enemy.SetCanMove(true);
+        Debug.Log("StartPatrol");
+    }
+
+    private IEnumerator WaitForRise(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        StartPatrol();
     }
 }

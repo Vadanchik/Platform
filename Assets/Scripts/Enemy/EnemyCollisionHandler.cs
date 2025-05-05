@@ -13,7 +13,7 @@ public class EnemyCollisionHandler : MonoBehaviour
             PatrolPointEntered?.Invoke();
         }
 
-        if (collision.gameObject.TryGetComponent<Hero>(out Hero hero))
+        if (collision.gameObject.TryGetComponent(out Hero hero))
         {
             HeroTouched?.Invoke(hero);
         }

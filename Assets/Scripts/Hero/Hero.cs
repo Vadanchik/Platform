@@ -2,24 +2,25 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(ItemPicker))]
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(Bag))]
 public class Hero : MonoBehaviour, IDamagable
 {
     [SerializeField] private ItemPicker _itemPicker;
-    [SerializeField] private int _maxHealth = 3;
     [SerializeField] private float _immunityTime = 1;
+    [SerializeField] private Rigidbody2D _rigidbody;
+    [SerializeField] private Health _health;
+    [SerializeField] private Bag _bag;
 
     private bool _hasImmunity = false;
-    private int _currentHealth;
-    private int _coinsCount = 0;
 
     private void Awake()
     {
         _itemPicker = GetComponent<ItemPicker>();
-    }
-
-    private void Start()
-    {
-        _currentHealth = _maxHealth;
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _health = GetComponent<Health>();
+        _bag = GetComponent<Bag>();
     }
 
     private void OnEnable()
@@ -35,19 +36,19 @@ public class Hero : MonoBehaviour, IDamagable
         _itemPicker.HealingDropPicked -= Heal;
     }
 
-    public void TakeCoin()
+    public void TakeCoin(int amount)
     {
-        _coinsCount++;
+        _bag.AddCoins(amount);
     }
 
     public void TakeDamage(int damage)
     {
-        if (_hasImmunity == false)
+        if (_hasImmunity == false & damage > 0)
         {
-            ChangeHealth(-damage);
+            _health.SubstractHealth(damage);
             StartCoroutine(StartImmunityTimer(_immunityTime));
 
-            if (_currentHealth == 0)
+            if (_health.IsAlive == false)
             {
                 Die();
             }
@@ -56,7 +57,11 @@ public class Hero : MonoBehaviour, IDamagable
 
     public void Push(Vector2 impulse)
     {
-
+        if (_hasImmunity == false)
+        {
+            _rigidbody.velocity = Vector2.zero;
+            _rigidbody.AddForce(impulse);
+        }
     }
 
     public void Die()
@@ -71,16 +76,11 @@ public class Hero : MonoBehaviour, IDamagable
 
     private void Heal(HealingDrop healingDrop)
     {
-        if (_currentHealth < _maxHealth)
+        if (_health.CurrentHealth < _health.MaxHealth)
         {
-            ChangeHealth(healingDrop.HealValue);
+            _health.IncreaseHealth(healingDrop.HealValue);
             Destroy(healingDrop.gameObject);
         }
-    }
-
-    private void ChangeHealth(int value)
-    {
-        _currentHealth = Mathf.Clamp(_currentHealth + value, 0, _maxHealth);
     }
 
     private IEnumerator StartImmunityTimer(float time)

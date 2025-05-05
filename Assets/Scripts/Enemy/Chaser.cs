@@ -1,9 +1,20 @@
 using UnityEngine;
 
+[RequireComponent(typeof(EnemyMover))]
 public class Chaser : MonoBehaviour
 {
     [SerializeField] private float _detectRadius = 2.0f;
     [SerializeField] private LayerMask _layersToDetect;
+    [SerializeField] private EnemyMover _mover;
+
+    private void Awake()
+    {
+        _mover = GetComponent<EnemyMover>();
+    }
+    public void Chase(Vector3 targetPosition)
+    {
+        _mover.MoveToTarget(targetPosition);
+    }
 
     public bool TryFindHeroInRange(out Hero hero)
     {

@@ -164,7 +164,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 1bbf8418d3877fa4892bdf3902d61892, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -282,8 +282,11 @@ MonoBehaviour:
   _rigidbody: {fileID: 0}
   _flipper: {fileID: 0}
   _groundDetector: {fileID: 0}
+  _collisionHandler: {fileID: 0}
   _movementSpeed: 1
   _maxHealth: 3
+  _damage: 1
+  _pushForce: 150
 --- !u!114 &5512997232675455794
 MonoBehaviour:
   m_ObjectHideFlags: 0

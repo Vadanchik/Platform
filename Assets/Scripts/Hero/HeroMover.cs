@@ -28,7 +28,15 @@ public class HeroMover : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (_inputService.Direction.x != 0)
+        {
+            Move();
+            _flipper.SetLookRotation(_inputService.Direction.x);
+        }
+    }
+
+    private void Move()
+    {
         _rigidbody.velocity = new Vector2(_inputService.Direction.x * _movementSpeed, _rigidbody.velocity.y);
-        _flipper.SetLookRotation(_inputService.Direction.x);
     }
 }
