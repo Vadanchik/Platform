@@ -30,7 +30,6 @@ public class EnemyMover : MonoBehaviour
 
     public void MoveToTarget(Vector3 targetPosition)
     {
-        Debug.Log(_canMove);
         if (_canMove)
         {
             Vector2 direction = targetPosition - transform.position;

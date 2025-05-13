@@ -21,7 +21,6 @@ public class Riser : MonoBehaviour
     private void StartPatrol()
     {
         _enemy.SetCanMove(true);
-        Debug.Log("StartPatrol");
     }
 
     private IEnumerator WaitForRise(float time)

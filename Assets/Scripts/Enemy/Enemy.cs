@@ -4,21 +4,19 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyCollisionHandler))]
 [RequireComponent(typeof(Patroller))]
 [RequireComponent(typeof(Chaser))]
+[RequireComponent(typeof(Health))]
 public class Enemy : MonoBehaviour, IDamagable
 {
     
     [SerializeField] private Rigidbody2D _rigidbody;
-    
     [SerializeField] private EnemyCollisionHandler _collisionHandler; 
     [SerializeField] private EnemyMover _mover;
     [SerializeField] private Chaser _chaser;
     [SerializeField] private Patroller _patroller;
+    [SerializeField] private Health _health;
 
-    [SerializeField] private int _maxHealth = 3;
     [SerializeField] private int _damage = 1;
     [SerializeField] private float _pushForce = 150;
-
-    private int _currentHealth;
 
     private void Awake()
     {
@@ -26,6 +24,7 @@ public class Enemy : MonoBehaviour, IDamagable
         _collisionHandler = GetComponent<EnemyCollisionHandler>();
         _chaser = GetComponent<Chaser>();
         _patroller = GetComponent<Patroller>();
+        _health = GetComponent<Health>();
     }
 
     private void OnEnable()
@@ -36,11 +35,6 @@ public class Enemy : MonoBehaviour, IDamagable
     private void OnDisable()
     {
         _collisionHandler.HeroTouched -= Attack;
-    }
-
-    private void Start()
-    {
-        _currentHealth = _maxHealth;
     }
 
     private void FixedUpdate()
@@ -57,9 +51,9 @@ public class Enemy : MonoBehaviour, IDamagable
 
     public void TakeDamage(int damage)
     {
-        _currentHealth = Mathf.Clamp(_currentHealth - damage, 0, _maxHealth);
+        _health.SubstractHealth(damage);
 
-        if (_currentHealth == 0)
+        if (_health.IsAlive == false)
         {
             Die();
         }

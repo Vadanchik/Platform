@@ -1,27 +1,33 @@
+using System;
 using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private int _maxHealth;
+    [SerializeField] private int _maxValue;
 
-    private int _currentHeath;
+    private int _currentValue;
 
-    public int CurrentHealth => _currentHeath;
-    public int MaxHealth => _maxHealth;
-    public bool IsAlive => _currentHeath > 0;
+    public int CurrentValue => _currentValue;
+    public int MaxValue => _maxValue;
+    public bool IsAlive => _currentValue > 0;
+
+    public event Action<float> ValueChanged;
 
     private void Start()
     {
-        _currentHeath = _maxHealth;
+        _currentValue = _maxValue;
+        ValueChanged?.Invoke(_currentValue);
     }
 
     public void SubstractHealth(int value)
     {
-        _currentHeath = Mathf.Clamp(_currentHeath - Mathf.Clamp(value, 0, int.MaxValue), 0, _maxHealth);
+        _currentValue = Mathf.Clamp(_currentValue - Mathf.Clamp(value, 0, int.MaxValue), 0, _maxValue);
+        ValueChanged?.Invoke(_currentValue);
     }
 
     public void IncreaseHealth(int value)
     {
-        _currentHeath = Mathf.Clamp(_currentHeath + Mathf.Clamp(value, 0, int.MaxValue), 0, _maxHealth);
+        _currentValue = Mathf.Clamp(_currentValue + Mathf.Clamp(value, 0, int.MaxValue), 0, _maxValue);
+        ValueChanged?.Invoke(_currentValue);
     }
 }

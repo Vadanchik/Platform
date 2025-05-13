@@ -9,7 +9,6 @@ public class HeroAttacker : MonoBehaviour
     [SerializeField] private InputService _inputService;
     [SerializeField] private HeroAnimator _animator;
     [SerializeField] private AnimationEvents _animationEvents;
-    [SerializeField] private AttackArea _attackArea;
 
     [SerializeField] private int _attackDamage;
     [SerializeField] private float _pushForce;
@@ -18,8 +17,6 @@ public class HeroAttacker : MonoBehaviour
     [SerializeField] private Vector2 _offset;
     [SerializeField] private Vector2 _size;
     [SerializeField] private LayerMask _layerMask;
-
-    private List<IDamagable> _currentAttackedDamagables = new List<IDamagable>();
 
     private void Awake()
     {

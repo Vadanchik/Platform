@@ -76,7 +76,7 @@ public class Hero : MonoBehaviour, IDamagable
 
     private void Heal(HealingDrop healingDrop)
     {
-        if (_health.CurrentHealth < _health.MaxHealth)
+        if (_health.CurrentValue < _health.MaxValue)
         {
             _health.IncreaseHealth(healingDrop.HealValue);
             Destroy(healingDrop.gameObject);

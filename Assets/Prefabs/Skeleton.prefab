@@ -125,6 +125,8 @@ GameObject:
   - component: {fileID: 5512997232675455794}
   - component: {fileID: 4345768070373129029}
   - component: {fileID: 8534856603176028724}
+  - component: {fileID: 1817597612626324157}
+  - component: {fileID: 932015406439397452}
   m_Layer: 7
   m_Name: Skeleton
   m_TagString: Untagged
@@ -222,6 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2b8703ac31bb65498438652f5864e2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spriteTransform: {fileID: 0}
 --- !u!114 &3306266395234659833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,6 +251,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _patrolPoints: []
   _enemyCollision: {fileID: 0}
+  _mover: {fileID: 0}
+  _isPatrol: 1
 --- !u!114 &1208357780953866917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,6 +269,7 @@ MonoBehaviour:
   _layersToDetect:
     serializedVersion: 2
     m_Bits: 512
+  _mover: {fileID: 0}
 --- !u!114 &1789481017636110488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,15 +282,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d0cac3930bac944db3e42631706f776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _patroller: {fileID: 0}
-  _isPatrol: 0
-  _chaser: {fileID: 0}
   _rigidbody: {fileID: 0}
-  _flipper: {fileID: 0}
-  _groundDetector: {fileID: 0}
   _collisionHandler: {fileID: 0}
-  _movementSpeed: 1
-  _maxHealth: 3
+  _mover: {fileID: 0}
+  _chaser: {fileID: 0}
+  _patroller: {fileID: 0}
+  _health: {fileID: 0}
   _damage: 1
   _pushForce: 150
 --- !u!114 &5512997232675455794
@@ -366,3 +369,33 @@ PolygonCollider2D:
       - {x: 0.110563755, y: -0.23292768}
       - {x: 0.11862421, y: -0.1994862}
   m_UseDelaunayMesh: 0
+--- !u!114 &1817597612626324157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1628424167014282453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d45886c2c3973ab4fbab188c33375732, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rigidbody: {fileID: 0}
+  _flipper: {fileID: 0}
+  _groundDetector: {fileID: 0}
+  _movementSpeed: 1
+  _canMove: 1
+--- !u!114 &932015406439397452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1628424167014282453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a5dbc35584a1024b921a236960fb31c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxValue: 3
