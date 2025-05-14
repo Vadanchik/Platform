@@ -5656,8 +5656,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cccc47247c6473409eae81c918c80ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _heroMovement: {fileID: 0}
-  _jumper: {fileID: 1867691858}
   _animator: {fileID: 1208636552}
 --- !u!114 &1867691856
 MonoBehaviour:
@@ -5783,6 +5781,9 @@ MonoBehaviour:
   _damageRate: 1
   _radius: 1.5
   _damage: 1
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &1867691864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13182,7 +13183,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 60}
+  m_AnchoredPosition: {x: 0, y: 64}
   m_SizeDelta: {x: 500, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2106816613

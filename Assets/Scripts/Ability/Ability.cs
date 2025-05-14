@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Health))]
@@ -10,6 +11,7 @@ public class Ability : MonoBehaviour
     [SerializeField] private float _damageRate;
     [SerializeField] private float _radius;
     [SerializeField] private int _damage;
+    [SerializeField] private LayerMask _enemyLayer;
 
     private Health _health;
     private bool _isReady = true;
@@ -31,7 +33,7 @@ public class Ability : MonoBehaviour
         StartCoroutine(StartCast());
     }
 
-    public IEnumerator StartCast()
+    private IEnumerator StartCast()
     {
         CastStarted?.Invoke();
         StartCoroutine(StartCooldown());
@@ -72,11 +74,14 @@ public class Ability : MonoBehaviour
     private IEnumerator GiveDamage()
     {
         WaitForSeconds tick = new WaitForSeconds(_damageRate);
+        int enemyCount = 2;
 
-        while (true)
+        while (enabled)
         {
-            Enemy nearestEnemy = FindNearestEnemy(Physics2D.OverlapCircleAll(transform.position, _radius));
+            Collider2D[] colliders = new Collider2D[enemyCount];
+            int count = Physics2D.OverlapCircleNonAlloc(transform.position, _radius, colliders, _enemyLayer);
 
+            Enemy nearestEnemy = FindNearestEnemy(colliders.Take(count).ToArray());
 
             if (nearestEnemy != null)
             {

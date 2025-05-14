@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class HeroAnimator : MonoBehaviour
 {
-    [SerializeField] private HeroMover _heroMovement;
-    [SerializeField] private Jumper _jumper;
     [SerializeField] private Animator _animator;
 
     public void SetSpeed(float velocity)
