@@ -45,7 +45,7 @@ public class Hero : MonoBehaviour, IDamagable
     {
         if (_hasImmunity == false & damage > 0)
         {
-            _health.SubstractHealth(damage);
+            _health.Substract(damage);
             StartCoroutine(StartImmunityTimer(_immunityTime));
 
             if (_health.IsAlive == false)
@@ -78,7 +78,7 @@ public class Hero : MonoBehaviour, IDamagable
     {
         if (_health.CurrentValue < _health.MaxValue)
         {
-            _health.IncreaseHealth(healingDrop.HealValue);
+            _health.Increase(healingDrop.HealValue);
             Destroy(healingDrop.gameObject);
         }
     }
