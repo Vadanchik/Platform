@@ -4,6 +4,7 @@ using UnityEngine;
 public class InputService : MonoBehaviour
 {
     private const string HorizontalAxis = "Horizontal";
+    private const int LeftMouseButtonKey = 0;
     
     private KeyCode _jumpKey = KeyCode.Space;
     private KeyCode _abilityKey = KeyCode.F;
@@ -21,7 +22,7 @@ public class InputService : MonoBehaviour
             JumpKeyPressed?.Invoke();
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(LeftMouseButtonKey))
         {
             AttackKeyPressed?.Invoke();
         }

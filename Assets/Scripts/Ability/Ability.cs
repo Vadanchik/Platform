@@ -8,7 +8,7 @@ public class Ability : MonoBehaviour
 {
     [SerializeField] private float _duration;
     [SerializeField] private float _cooldownTime;
-    [SerializeField] private float _damageRate;
+    [SerializeField] private float _damageInterval;
     [SerializeField] private float _radius;
     [SerializeField] private int _damage;
     [SerializeField] private LayerMask _enemyLayer;
@@ -73,7 +73,7 @@ public class Ability : MonoBehaviour
 
     private IEnumerator GiveDamage()
     {
-        WaitForSeconds tick = new WaitForSeconds(_damageRate);
+        WaitForSeconds tick = new WaitForSeconds(_damageInterval);
         int enemyCount = 2;
 
         while (enabled)
@@ -85,8 +85,7 @@ public class Ability : MonoBehaviour
 
             if (nearestEnemy != null)
             {
-                nearestEnemy.TakeDamage(_damage);
-                _health.Increase(_damage);
+                _health.Increase(nearestEnemy.TakeDamage(_damage));
             }
 
             yield return tick;

@@ -3,8 +3,9 @@ using UnityEngine;
 [RequireComponent(typeof(InputService))]
 public class AbilityHandler : MonoBehaviour
 {
-    [SerializeField] private InputService _input;
     [SerializeField] private Ability _ability;
+    
+    private InputService _input;
 
     private void Awake()
     {

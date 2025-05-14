@@ -41,10 +41,17 @@ public class Hero : MonoBehaviour, IDamagable
         _bag.AddCoins(amount);
     }
 
-    public void TakeDamage(int damage)
+    public int TakeDamage(int damage)
     {
+        int takenDamage;
+
         if (_hasImmunity == false & damage > 0)
         {
+            if (_health.CurrentValue >= damage)
+                takenDamage = damage;
+            else
+                takenDamage = _health.CurrentValue;
+
             _health.Substract(damage);
             StartCoroutine(StartImmunityTimer(_immunityTime));
 
@@ -53,6 +60,10 @@ public class Hero : MonoBehaviour, IDamagable
                 Die();
             }
         }
+        else
+            takenDamage = 0;
+
+        return takenDamage;
     }
 
     public void Push(Vector2 impulse)
