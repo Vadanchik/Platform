@@ -30,48 +30,48 @@ public class Ability : MonoBehaviour
 
     public void ApplyCast()
     {
-        StartCoroutine(StartCast());
+        StartCoroutine(ExecuteCast());
     }
 
-    private IEnumerator StartCast()
+    private IEnumerator ExecuteCast()
     {
         CastStarted?.Invoke();
-        StartCoroutine(StartCooldown());
-        Coroutine damageCoroutine = StartCoroutine(GiveDamage());
+        Coroutine damageCoroutine = StartCoroutine(ExecuteDamage());
 
         WaitForEndOfFrame tick = new WaitForEndOfFrame();
-        float timer = _duration;
+        float timer = 0;
 
-        while (timer > 0)
+        while (timer < _duration)
         {
             yield return tick;
 
-            timer = Mathf.Clamp(timer - Time.deltaTime, 0, _duration);
+            timer = Mathf.Clamp(timer + Time.deltaTime, 0, _duration);
             DurationTimerChanged?.Invoke(timer, _duration);
         }
-
-        CastEnded?.Invoke();
+        
+        _isReady = false;
         StopCoroutine(damageCoroutine);
+        StartCoroutine(ExecuteCooldown());
     }
 
-    private IEnumerator StartCooldown()
+    private IEnumerator ExecuteCooldown()
     {
         WaitForEndOfFrame tick = new WaitForEndOfFrame();
         float timer = _cooldownTime;
-        _isReady = false;
 
         while(timer > 0)
         {
             yield return tick;
 
             timer = Mathf.Clamp(timer - Time.deltaTime, 0, _cooldownTime);
-            CooldownTimerChanged?.Invoke(timer, _cooldownTime);
+            DurationTimerChanged?.Invoke(timer, _cooldownTime);
         }
 
+        CastEnded?.Invoke();
         _isReady = true;
     }
 
-    private IEnumerator GiveDamage()
+    private IEnumerator ExecuteDamage()
     {
         WaitForSeconds tick = new WaitForSeconds(_damageInterval);
         int enemyCount = 2;

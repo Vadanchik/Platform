@@ -19,15 +19,29 @@ public class Health : MonoBehaviour
         ValueChanged?.Invoke(_currentValue);
     }
 
-    public void Substract(int value)
+    public int Substract(int value)
     {
+        int substractedValue = value;
+
+        if (value > CurrentValue)
+            substractedValue = CurrentValue;
+
         _currentValue = Mathf.Clamp(_currentValue - Mathf.Clamp(value, 0, int.MaxValue), 0, _maxValue);
         ValueChanged?.Invoke(_currentValue);
+
+        return substractedValue;
     }
 
-    public void Increase(int value)
+    public int Increase(int value)
     {
+        int increasedValue = value;
+
+        if (value > CurrentValue)
+            increasedValue = CurrentValue;
+
         _currentValue = Mathf.Clamp(_currentValue + Mathf.Clamp(value, 0, int.MaxValue), 0, _maxValue);
         ValueChanged?.Invoke(_currentValue);
+
+        return increasedValue;
     }
 }

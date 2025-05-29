@@ -51,14 +51,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
     public int TakeDamage(int damage)
     {
-        int takenDamage;
-
-        if (_health.CurrentValue >= damage)
-            takenDamage = damage;
-        else
-            takenDamage = _health.CurrentValue;
-
-        _health.Substract(damage);
+        int takenDamage = _health.Substract(damage);
 
         if (_health.IsAlive == false)
         {

@@ -47,13 +47,8 @@ public class Hero : MonoBehaviour, IDamagable
 
         if (_hasImmunity == false & damage > 0)
         {
-            if (_health.CurrentValue >= damage)
-                takenDamage = damage;
-            else
-                takenDamage = _health.CurrentValue;
-
-            _health.Substract(damage);
-            StartCoroutine(StartImmunityTimer(_immunityTime));
+            takenDamage = _health.Substract(damage);
+            StartCoroutine(ExecuteImmunity(_immunityTime));
 
             if (_health.IsAlive == false)
             {
@@ -94,7 +89,7 @@ public class Hero : MonoBehaviour, IDamagable
         }
     }
 
-    private IEnumerator StartImmunityTimer(float time)
+    private IEnumerator ExecuteImmunity(float time)
     {
         WaitForSeconds waitingTime = new WaitForSeconds(time);
         _hasImmunity = true;
